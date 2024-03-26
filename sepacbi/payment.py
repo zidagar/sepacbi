@@ -152,7 +152,7 @@ class Payment(AttributeCarrier):
             tag = 'CBIBdyPaymentRequest'
         else:
             tag = 'CBIPaymentRequest'
-        schema = tag + '.00.04.00'
+        schema = tag + '.00.04.01'
         xmlns = 'urn:CBI:xsd:' + schema
         schema_location = xmlns + ' ' + schema + '.xsd'
         root = etree.Element(
@@ -169,7 +169,7 @@ class Payment(AttributeCarrier):
         "Returns the whole XML structure for the payment."
         # Outer XML structure
         outer, root = self.get_xml_root()
-        xmlns = 'urn:CBI:xsd:CBIPaymentRequest.00.04.00'
+        xmlns = 'urn:CBI:xsd:CBIPaymentRequest.00.04.01'
 
         # Header
         header = etree.SubElement(root, 'GrpHdr', nsmap={None: xmlns})
@@ -206,7 +206,8 @@ class Payment(AttributeCarrier):
         execution_date = date.today()
         if hasattr(self, 'execution_date'):
             execution_date = self.execution_date
-        etree.SubElement(info, 'ReqdExctnDt').text = execution_date.isoformat()
+        dateTag = etree.SubElement(info, 'ReqdExctnDt').text = execution_date.isoformat()
+        etree.SubElement(dateTag, 'Dt').text = execution_date.isoformat()
 
         # Debtor information
         info.append(self.debtor.__tag__('Dbtr'))
