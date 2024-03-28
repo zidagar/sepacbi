@@ -206,7 +206,7 @@ class Payment(AttributeCarrier):
         execution_date = date.today()
         if hasattr(self, 'execution_date'):
             execution_date = self.execution_date
-        dateTag = etree.SubElement(info, 'ReqdExctnDt').text = execution_date.isoformat()
+        dateTag = etree.SubElement(info, 'ReqdExctnDt')
         etree.SubElement(dateTag, 'Dt').text = execution_date.isoformat()
 
         # Debtor information
