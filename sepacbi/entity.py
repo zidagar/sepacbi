@@ -96,7 +96,7 @@ class IdHolder(AttributeCarrier):
         if hasattr(self, 'country'):
             self.length('country', 2)
 
-    def emit_tag(self, tag=None, as_initiator=False):
+    def emit_tag(self, tag=None, as_initiator=False, hide=False):
         """
         Emit a subtree for an entity, using the supplied tag for the root
         element. If the identity is the Initiator's, emit the CUC as well.
@@ -123,14 +123,15 @@ class IdHolder(AttributeCarrier):
         orgid = etree.SubElement(idtag, id_container)
 
         # CUC
-        if as_initiator:
+        if as_initiator or hide:
             if not hasattr(self, 'cuc'):
                 raise MissingCUCError
             orgid.append(emit_id_tag(self.cuc, 'CBI'))
 
         # Tax code
-        if hasattr(self, 'cf'):
-            orgid.append(emit_id_tag(self.cf, 'ADE'))
+        if not hide:
+            if hasattr(self, 'cf'):
+                orgid.append(emit_id_tag(self.cf, 'ADE'))
 
         if hasattr(self, 'code'):
             orgid.append(emit_id_tag(self.code, None))
