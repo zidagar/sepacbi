@@ -162,7 +162,7 @@
           </Amt>
           <CdtrAgt>
             <FinInstnId>
-              <BIC>ABCDESNN</BIC>
+              <BICFI>ABCDESNN</BICFI>
             </FinInstnId>
           </CdtrAgt>
           <Cdtr>

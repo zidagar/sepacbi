@@ -35,7 +35,7 @@ class Bank(AttributeCarrier):
         "Returns a XML tree for the bank, optionally providing the ABI code."
         root = etree.Element('FinInstnId')
         if hasattr(self, 'bic'):
-            etree.SubElement(root, 'BIC').text = self.bic
+            etree.SubElement(root, 'BICFI').text = self.bic
         if output_abi:
             clearing = etree.SubElement(root, 'ClrSysMmbId')
             etree.SubElement(clearing, 'MmbId').text = self.abi
