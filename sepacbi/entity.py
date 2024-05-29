@@ -121,7 +121,7 @@ class IdHolder(AttributeCarrier):
                                 pstl_town)
             assert isinstance(self.pstl, Address)
 
-    def emit_tag(self, tag=None, as_initiator=False, hide=False):
+    def emit_tag(self, tag=None, as_initiator=False):
         """
         Emit a subtree for an entity, using the supplied tag for the root
         element. If the identity is the Initiator's, emit the CUC as well.
@@ -148,15 +148,14 @@ class IdHolder(AttributeCarrier):
         orgid = etree.SubElement(idtag, id_container)
 
         # CUC
-        if as_initiator or hide:
+        if as_initiator:
             if not hasattr(self, 'cuc'):
                 raise MissingCUCError
             orgid.append(emit_id_tag(self.cuc, 'CBI'))
 
         # Tax code
-        if not hide:
-            if hasattr(self, 'cf'):
-                orgid.append(emit_id_tag(self.cf, 'ADE'))
+        if hasattr(self, 'cf'):
+            orgid.append(emit_id_tag(self.cf, 'ADE'))
 
         if hasattr(self, 'code'):
             orgid.append(emit_id_tag(self.code, None))

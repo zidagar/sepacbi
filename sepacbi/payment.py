@@ -210,7 +210,7 @@ class Payment(AttributeCarrier):
         etree.SubElement(dateTag, 'Dt').text = execution_date.isoformat()
 
         # Debtor information
-        info.append(initiator.__tag__('Dbtr', as_initiator=False, hide=True))
+        info.append(self.debtor.__tag__('Dbtr'))
 
         # Debtor account
         info.append(self.account.__tag__('DbtrAcct'))
